@@ -1,0 +1,16 @@
+require 'sinatra'
+
+# Loads database configuration
+require './database.rb'
+
+# Loads Classes
+#require './post.rb'
+
+# Perform basic sanity checks and initialize all relationships
+# Call this when you've defined all your models
+DataMapper.finalize
+
+get '/index' do
+  @page = 'index'
+  erb :index
+end
