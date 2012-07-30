@@ -3,14 +3,14 @@ require 'sinatra'
 # Loads database configuration
 require_relative './database.rb'
 
-# Loads Classes
-#require_relative './post.rb'
+# Loads Models
+# require_relative './models/'
 
 # Perform basic sanity checks and initialize all relationships
 # Call this when you've defined all your models
 DataMapper.finalize
 
-get '/index' do
+get '/' do
   @page = 'index'
   erb :index
 end

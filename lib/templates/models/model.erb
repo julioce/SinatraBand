@@ -1,0 +1,16 @@
+class <%= @model_name %>
+  include DataMapper::Resource
+
+  property :id, Serial
+
+  #any other property
+
+  property :created_at, DateTime
+  property :updated_at, DateTime
+
+  #validates_presence_of
+  #validates_length_of
+end
+
+# Automatically create the <%= @model_name %> table if you haven't already
+<%= @model_name %>.auto_upgrade!

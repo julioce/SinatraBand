@@ -9,21 +9,27 @@ def create_app
   mkdir "./#{@APP_NAME}"
 
   #Creates de App file
-  generate_file_from_template "", :app, :rb
+  generate_file_from_template "", :app, :app, :rb
 
   #Creates de Database file
-  generate_file_from_template "", :database, :rb
+  generate_file_from_template "", :database, :database, :rb
 
   #Creates de View diretory
   mkdir "./#{@APP_NAME}/views"
 
   #Creates de index file
-  generate_file_from_template "/views", :index, :erb
+  generate_file_from_template "/views", :index, :index, :erb
 end
 
 
-def create_model
-  puts "Creating model"
+def create_model model_name
+  @model_name = model_name.capitalize
+
+  #Creates de Models diretory
+  mkdir "./#{@APP_NAME}/models"
+
+  #Creates de Model file
+  generate_file_from_template "/models", :model, model_name, :rb
 end
 
 
@@ -46,7 +52,12 @@ def proccess_argument
           create_app
         end
       when "model"
-        create_model
+        if ARGV[1].nil?
+          put_error_and_quit "Error: Missing arguments for model action"
+        else
+          @model_name = ARGV[1]
+          create_model @model_name
+        end
       else
         put_error_and_quit "Error: Missing or unknow arguments"
     end

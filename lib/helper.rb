@@ -1,17 +1,17 @@
-def generate_file_from_template directory, file, extension
+def generate_file_from_template directory, template, final_file, extension
   
-  File.open("./#{@APP_NAME}#{directory}/#{file}.#{extension}", "w") do |f|
+  File.open("./#{@APP_NAME}#{directory}/#{final_file}.#{extension}", "w") do |f|
   	begin
-  	  file_template = ERB.new(File.open("#{@ROOT}#{directory}/#{file}.erb").read())
+  	  file_template = ERB.new(File.open("#{@ROOT}#{directory}/#{template}.erb").read())
   	rescue (Errno::ENOENT)
-  	  put_error_and_quit "Error: Missing template for file #{@ROOT}#{directory}/#{file}.#{extension}"
+  	  put_error_and_quit "Error: Missing template for file #{@ROOT}#{directory}/#{template}.#{extension}"
   	end
 
   	begin
   	  f.write(file_template.result(binding))
-  	  puts "#{directory}/#{file}.#{extension} file created"
+  	  puts ".#{directory}/#{final_file}.#{extension} file created"
   	rescue (Errno::ENOENT)
-  	  put_error_and_quit "Error creating #{file}.#{extension}"
+  	  put_error_and_quit "Error creating #{final_file}.#{extension}"
   	end
 
   end
