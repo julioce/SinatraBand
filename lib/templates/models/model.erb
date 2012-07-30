@@ -2,10 +2,11 @@ class <%= @model_name %>
   include DataMapper::Resource
 
   property :id, Serial
-
-  #any other property
-
+  <% @model_properties.each do |property|%>
+  <%= property %>
+  <% end%>
   property :created_at, DateTime
+  
   property :updated_at, DateTime
 
   #validates_presence_of

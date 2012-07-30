@@ -23,8 +23,19 @@ def mkdir diretory
     Dir.mkdir diretory
     puts "#{diretory} directory created."
   rescue (Errno::EEXIST)
-    put_error_and_quit "Error: You already have a directory #{diretory}."
+    puts "Notice: You already have a directory #{diretory}."
   end
+end
+
+def elaborates_model_properties model_properties
+  
+  new_model_properties = Array.new()
+
+  model_properties.each do |model_property|
+  	new_model_properties << "property :" + model_property.to_s().split(':')[0] + ", " + model_property.to_s().split(':')[1].capitalize
+  end
+
+  new_model_properties
 end
 
 

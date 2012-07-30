@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'sinatraband'
-  s.version     = '0.0.4'
+  s.version     = '0.0.5'
   s.executables << 'sinatraband'
   s.date        = '2012-07-30'
   s.summary     = "Sinatra app generator"

@@ -17,16 +17,17 @@ def create_app
   #Creates de View diretory
   mkdir "./#{@APP_NAME}/views"
 
+  #Creates de Models diretory
+  mkdir "./#{@APP_NAME}/models"
+
   #Creates de index file
   generate_file_from_template "/views", :index, :index, :erb
 end
 
 
-def create_model model_name
+def create_model model_name, model_properties
   @model_name = model_name.capitalize
-
-  #Creates de Models diretory
-  mkdir "./#{@APP_NAME}/models"
+  @model_properties = elaborates_model_properties model_properties
 
   #Creates de Model file
   generate_file_from_template "/models", :model, model_name, :rb
@@ -55,8 +56,15 @@ def proccess_argument
         if ARGV[1].nil?
           put_error_and_quit "Error: Missing arguments for model action"
         else
-          @model_name = ARGV[1]
-          create_model @model_name
+          if ARGV.length > 2
+            model_properties = Array.new
+            ARGV.each_with_index do |property, index|
+              if index > 1
+                model_properties << property
+              end
+            end
+          end
+          create_model ARGV[1], model_properties
         end
       else
         put_error_and_quit "Error: Missing or unknow arguments"
