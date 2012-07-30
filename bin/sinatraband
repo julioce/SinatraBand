@@ -2,61 +2,58 @@
 
 require 'pathname'
 require 'erb'
+require_relative '../lib/helper.rb'
 
-def generate_file_from_template directory, file, extension
+def create_app
+  #Creates de App diretory
+  mkdir "./#{@APP_NAME}"
+
+  #Creates de App file
+  generate_file_from_template "", :app, :rb
+
+  #Creates de Database file
+  generate_file_from_template "", :database, :rb
+
+  #Creates de View diretory
+  mkdir "./#{@APP_NAME}/views"
+
+  #Creates de index file
+  generate_file_from_template "/views", :index, :erb
+end
+
+
+def create_model
+  puts "Creating model"
+end
+
+
+def proccess_argument
   
-  File.open("./#{@app_name}#{directory}/#{file}.#{extension}", "w") do |f|
-  	begin
-  	  file_template = ERB.new(File.open("#{APP_ROOT}/../lib/templates#{directory}/#{file}.erb").read())
-  	rescue (Errno::ENOENT)
-  	  puts "Error: Missing template for file #{file}.#{extension}"
-      puts "#{APP_ROOT}/../lib/templates#{directory}/#{file}.erb"
-  	  exit
-  	end
+  if ARGV.empty?
+    put_error_and_quit "Error: Missing arguments"
+  else
+    #Get the global current path
+    @ROOT = Pathname(__FILE__).dirname.realpath.to_s()+"/../lib/templates"
 
-  	begin
-  	  f.write(file_template.result(binding))
-  	  puts "#{directory}/#{file}.#{extension} file created"
-  	rescue (Errno::ENOENT)
-  	  puts "Error creating #{file}.#{extension}"
-  	  exit
-  	end
-
+    #Defines operation
+    case ARGV[0]
+      when "create"
+        #Get de App name
+        if ARGV[1].nil?
+          put_error_and_quit "Error: Missing arguments for create action"
+        else
+          @APP_NAME = ARGV[1]
+          create_app
+        end
+      when "model"
+        create_model
+      else
+        put_error_and_quit "Error: Missing or unknow arguments"
+    end
+    
   end
+
 end
 
-
-def mkdir diretory
-  begin
-    Dir.mkdir diretory
-    puts "#{diretory} directory created."
-  rescue (Errno::EEXIST)
-    puts "Error: You already have a directory #{diretory}."
-    exit
-  end
-end
-
-#Get the app name
-if !ARGV[0]
-	puts "Error: Missing app name as parameter"
-	exit
-end
-
-@app_name = ARGV[0]
-
-APP_ROOT = Pathname(__FILE__).dirname.realpath
-
-#Creates de App diretory
-mkdir "./#{@app_name}"
-
-#Creates de App file
-generate_file_from_template "", :app, :rb
-
-#Creates de Database file
-generate_file_from_template "", :database, :rb
-
-#Creates de View diretory
-mkdir "./#{@app_name}/views"
-
-#Creates de index file
-generate_file_from_template "/views", :index, :erb
+#start de proccess
+proccess_argument
