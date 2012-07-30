@@ -1,12 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
 require 'erb'
 
 def generate_file_from_template directory, file, extension
   
-  File.open("../#{@app_name}#{directory}/#{file}.#{extension}", "w") do |f|
+  File.open("./#{@app_name}#{directory}/#{file}.#{extension}", "w") do |f|
   	begin
-  	  file_template = ERB.new(File.open("./templates#{directory}/#{file}.erb").read())
+  	  file_template = ERB.new(File.open("#{APP_ROOT}/../lib/templates#{directory}/#{file}.erb").read())
   	rescue (Errno::ENOENT)
   	  puts "Error: Missing template for file #{file}.#{extension}"
+      puts "#{APP_ROOT}/../lib/templates#{directory}/#{file}.erb"
   	  exit
   	end
 
@@ -25,6 +29,7 @@ end
 def mkdir diretory
   begin
     Dir.mkdir diretory
+    puts "#{diretory} directory created."
   rescue (Errno::EEXIST)
     puts "Error: You already have a directory #{diretory}."
     exit
@@ -39,8 +44,10 @@ end
 
 @app_name = ARGV[0]
 
+APP_ROOT = Pathname(__FILE__).dirname.realpath
+
 #Creates de App diretory
-mkdir "../#{@app_name}"
+mkdir "./#{@app_name}"
 
 #Creates de App file
 generate_file_from_template "", :app, :rb
@@ -49,7 +56,7 @@ generate_file_from_template "", :app, :rb
 generate_file_from_template "", :database, :rb
 
 #Creates de View diretory
-mkdir "../#{@app_name}/views"
+mkdir "./#{@app_name}/views"
 
 #Creates de index file
 generate_file_from_template "/views", :index, :erb
