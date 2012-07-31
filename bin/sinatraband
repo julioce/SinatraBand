@@ -35,44 +35,41 @@ end
 
 
 def proccess_argument
-  
-  if ARGV.empty?
-    put_error_and_quit "Error: Missing arguments"
-  else
-    #Get the global current path
-    @ROOT = Pathname(__FILE__).dirname.realpath.to_s()+"/../lib/templates"
+  #Get the global current path
+  @ROOT = Pathname(__FILE__).dirname.realpath.to_s()+"/../lib/templates"
 
-    #Defines operation
-    case ARGV[0]
-      when "create"
-        #Get de App name
-        if ARGV[1].nil?
-          put_error_and_quit "Error: Missing arguments for create action"
-        else
-          @APP_NAME = ARGV[1]
-          create_app
-        end
-      when "model"
-        if ARGV[1].nil?
-          put_error_and_quit "Error: Missing arguments for model action"
-        else
-          if ARGV.length > 2
-            model_properties = Array.new
-            ARGV.each_with_index do |property, index|
-              if index > 1
-                model_properties << property
-              end
+  #Defines operation
+  case ARGV[0]
+    when "create"
+      #Get de App name
+      if ARGV[1].nil?
+        put_error_and_quit "Error: Missing arguments for create action"
+      else
+        @APP_NAME = ARGV[1]
+        create_app
+      end
+    when "model"
+      if ARGV[1].nil?
+        put_error_and_quit "Error: Missing arguments for model action"
+      else
+        if ARGV.length > 2
+          model_properties = Array.new
+          ARGV.each_with_index do |property, index|
+            if index > 1
+              model_properties << property
             end
           end
-          create_model ARGV[1], model_properties
         end
-      else
-        put_error_and_quit "Error: Missing or unknow arguments"
-    end
-    
+        create_model ARGV[1], model_properties
+      end
+    else
+      put_error_and_quit "Error: Missing or unknow arguments"
   end
-
 end
 
 #start de proccess
-proccess_argument
+if ARGV.empty?
+  put_error_and_quit "Error: Missing arguments"
+else
+  proccess_argument
+end

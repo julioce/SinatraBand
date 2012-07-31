@@ -30,10 +30,17 @@ end
 
 def elaborates_model_properties model_properties
   
-  new_model_properties = Array.new()
+  new_model_properties = Array.new
 
   model_properties.each do |model_property|
-  	new_model_properties << "property :" + model_property.to_s().split(':')[0] + ", " + model_property.to_s().split(':')[1].capitalize
+    name = model_property.to_s().split(':')[0]
+    type = model_property.to_s().split(':')[1].capitalize
+    
+    if type == "Datetime" then type = "DateTime" end
+
+    if !["id", "created_at", "updated_at"].include? name
+  	  new_model_properties << "property :" + name + ", " + type
+    end
   end
 
   new_model_properties

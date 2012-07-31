@@ -6,11 +6,24 @@ class <%= @model_name %>
   <%= property %>
   <% end%>
   property :created_at, DateTime
-  
+
   property :updated_at, DateTime
 
-  #validates_presence_of
+  #validates_absence_of
+  #validates_acceptance_of
+  #validates_with_block
+  #validates_confirmation_of
+  #validates_format_of
   #validates_length_of
+  #validates_with_method
+  #validates_numericality_of
+  #validates_primitive_type_of
+  #validates_presence_of
+  #validates_uniqueness_of
+  #validates_within
+
+  #validates_with_method
+
 end
 
 # Automatically create the <%= @model_name %> table if you haven't already
