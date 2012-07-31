@@ -27,6 +27,7 @@ def mkdir diretory
   end
 end
 
+
 def elaborates_model_properties model_properties
   
   new_model_properties = Array.new()
