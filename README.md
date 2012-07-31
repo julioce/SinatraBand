@@ -9,7 +9,7 @@ Also, i think Sinatra sings better with a band...
 Installation
 -----------
 
-    gem install sinatraband-0.0.6.gem
+    $ gem install sinatraband-0.0.7.gem
 
 
 Requirements
@@ -18,9 +18,9 @@ Requirements
     require 'pathname'
     require 'erb'
 
-You need Ruby `1.9` to run SinatraBand and the Sinatra gem to run the app.
+You need `Ruby 1.9` to run SinatraBand and the `Sinatra` gem to run the app.
 
-It's currently only supporting MySQL database. But it's actually pretty easy to change the default values on the generated database.rb. Take a look on Data Mapper for help.
+It's currently only supporting MySQL database. But it's actually pretty easy to change the default values on the generated database.rb. Take a look on DataMapper for help.
 
 
 Usage
@@ -28,15 +28,19 @@ Usage
 
 After setup you can do for creating a app:
 
-    sinatraband create app_name
+    $ sinatraband create app_name
 
-Once you see the files created, you can move to the app_name directory and run the Sinatra app like you would normally do:
+Once you see the files created, you can move to the app_name directory:
 
-    ruby app.rb
+    $ cd app_name
+
+Then run the Sinatra app like you would normally do:
+
+    $ ruby app.rb
 
 You can also create a model and it's following properties:
 
-    sinatraband model model_name property1:Data_mapper_type property2:Other_data_mapper_type
+    $ sinatraband model model_name property1:datamapper_type property2:other_datamapper_type
 
 
 Testing
