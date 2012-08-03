@@ -1,40 +1,40 @@
-def generate_file_from_template directory, template, final_file, extension
+def generate_file_from_template input={:directory => '', :template => '', :final_file => '', :extension => ''}
   
-  File.open("./#{@APP_NAME}#{directory}/#{final_file}.#{extension}", "w") do |f|
+  File.open("./#{@APP_NAME}#{input[:directory]}/#{input[:final_file]}.#{input[:extension]}", "w") do |f|
   	begin
-  	  file_template = ERB.new(File.open("#{@ROOT}#{directory}/#{template}.erb").read())
+  	  file_template = ERB.new(File.open("#{@ROOT}#{input[:directory]}/#{input[:template]}.erb").read)
   	rescue (Errno::ENOENT)
-  	  put_error_and_quit "Error: Missing template for file #{@ROOT}#{directory}/#{template}.#{extension}"
+  	  put_error_and_quit "Error: Missing template for file #{@ROOT}#{input[:directory]}/#{input[:template]}.#{input[:extension]}."
   	end
 
   	begin
   	  f.write(file_template.result(binding))
-  	  puts ".#{directory}/#{final_file}.#{extension} file created"
+  	  puts ".#{input[:directory]}/#{input[:final_file]}.#{input[:extension]} file created."
   	rescue (Errno::ENOENT)
-  	  put_error_and_quit "Error creating #{final_file}.#{extension}"
+  	  put_error_and_quit "Error creating #{input[:final_file]}.#{input[:extension]}."
   	end
 
   end
 end
 
 
-def mkdir diretory
+def mkdir input={:directory => './'+@APP_NAME}
   begin
-    Dir.mkdir diretory
-    puts "#{diretory} directory created."
+    Dir.mkdir input[:directory]
+    puts "#{input[:directory]} directory created."
   rescue (Errno::EEXIST)
-    puts "Notice: You already have a directory #{diretory}."
+    puts "Notice: You already have a directory #{input[:directory]}."
   end
 end
 
 
-def elaborates_model_properties model_properties
+def elaborates_model_properties input={:model_properties => ''}
   
   new_model_properties = Array.new
 
-  model_properties.each do |model_property|
-    name = model_property.to_s().split(':')[0]
-    type = model_property.to_s().split(':')[1].capitalize
+  input[:model_properties].each do |model_property|
+    name = model_property.to_s.split(':')[0].downcase
+    type = model_property.to_s.split(':')[1].capitalize
     
     if type == "Datetime" then type = "DateTime" end
 
@@ -47,7 +47,7 @@ def elaborates_model_properties model_properties
 end
 
 
-def put_error_and_quit error_message
-  puts error_message
+def put_error_and_quit input={:error_message => 'An erro has ocorred.'}
+  puts input[:error_message]
   exit
 end
