@@ -3,8 +3,8 @@ require 'sinatra'
 # Loads database configuration
 require_relative './database.rb'
 
-# Loads Models
-# require_relative './models/'
+# Loads all models in models directory
+Dir["./models/*.rb"].each {|file| require_relative file }
 
 # Perform basic sanity checks and initialize all relationships
 # Call this when you've defined all your models

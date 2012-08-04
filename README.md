@@ -9,7 +9,7 @@ Also, i think Sinatra sings better with a band...
 Installation
 -----------
 
-    $ gem install sinatraband-0.0.8.gem
+    $ gem install sinatraband-0.0.9.gem
 
 
 Requirements
