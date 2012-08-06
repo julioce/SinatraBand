@@ -30,7 +30,7 @@ def create_model input={:model_name => '', :model_properties => {}}
   @model_properties = elaborates_model_properties :model_properties => input[:model_properties]
 
   #Creates de Model file
-  generate_file_from_template :directory => "/models", :template => "model", :final_file => input[:model_name], :extension => "rb"
+  generate_file_from_template :directory => "/models", :template => "model", :final_file => input[:model_name].downcase, :extension => "rb"
 end
 
 
@@ -39,7 +39,7 @@ def proccess_argument
   @ROOT = Pathname(__FILE__).dirname.realpath.to_s+"/../lib/templates"
 
   #Defines operation
-  case ARGV[0]
+  case ARGV[0].downcase
     when "create"
       #Get de App name
       if ARGV[1].nil?
