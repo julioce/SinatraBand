@@ -1,4 +1,7 @@
 require 'data_mapper'
 
 # A MySQL connection:
-DataMapper.setup(:default, 'mysql://root:@127.0.0.1/<%= @APP_NAME %>')
+DataMapper.setup(:default, 'mysql://root:@127.0.0.1/<%= @name %>')
+
+# Set all String properties to have a default length of 255
+DataMapper::Property::String.length(255)

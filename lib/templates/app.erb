@@ -7,7 +7,6 @@ require_relative './database.rb'
 Dir["./models/*.rb"].each {|file| require_relative file }
 
 # Perform basic sanity checks and initialize all relationships
-# Call this when you've defined all your models
 DataMapper.finalize
 
 get '/' do

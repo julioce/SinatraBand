@@ -1,10 +1,10 @@
-def generate_file_from_template input={:directory => '', :template => '', :final_file => '', :extension => ''}
+def generate_file_from_template input={:directory => './'+@name, :template => '', :final_file => '', :extension => ''}
   
-  File.open("./#{@APP_NAME}#{input[:directory]}/#{input[:final_file]}.#{input[:extension]}", "w") do |f|
+  File.open("./#{@name}#{input[:directory]}/#{input[:final_file]}.#{input[:extension]}", "w") do |f|
   	begin
-  	  file_template = ERB.new(File.open("#{@ROOT}#{input[:directory]}/#{input[:template]}.erb").read)
+  	  file_template = ERB.new(File.open("#{@root}#{input[:directory]}/#{input[:template]}.erb").read)
   	rescue (Errno::ENOENT)
-  	  put_error_and_quit "Error: Missing template for file #{@ROOT}#{input[:directory]}/#{input[:template]}.#{input[:extension]}."
+  	  put_error_and_quit "Error: Missing template for file #{@root}#{input[:directory]}/#{input[:template]}.#{input[:extension]}."
   	end
 
   	begin
@@ -18,7 +18,7 @@ def generate_file_from_template input={:directory => '', :template => '', :final
 end
 
 
-def mkdir input={:directory => './'+@APP_NAME}
+def mkdir input={:directory => './'+@name}
   begin
     Dir.mkdir input[:directory]
     puts "#{input[:directory]} directory created."
@@ -47,7 +47,7 @@ def elaborates_model_properties input={:model_properties => ''}
 end
 
 
-def put_error_and_quit input={:error_message => 'An erro has ocorred.'}
+def put_error_and_quit input={:error_message => 'An error has ocorred.'}
   puts input[:error_message]
   exit
 end
