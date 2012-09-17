@@ -56,6 +56,9 @@ class App
     #Creates de Models diretory
     mkdir :directory => "./#{@name}/models"
 
+    #Creates de Models diretory
+    mkdir :directory => "./#{@name}/controllers"
+
     #Creates de index file
     generate_file_from_template :directory => "/views", :template => "index", :final_file => "index", :extension => "erb"
   end

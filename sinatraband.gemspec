@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name        = 'sinatraband'
-  s.version     = '0.1.1'
+  s.version     = '0.1.2'
   s.executables << 'sinatraband'
-  s.date        = '2012-08-07'
+  s.date        = '2012-09-17'
   s.summary     = "Sinatra app generator"
   s.description = "Ruby gem to create a basic sinatra app."
   s.authors     = ["Júlio Bueno"]
