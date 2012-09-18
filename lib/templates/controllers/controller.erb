@@ -1,0 +1,38 @@
+get '/<%= @model_name.downcase %>' do
+  @<%= @model_name.downcase %> = <%= @model_name %>.all
+  erb :'<%= @model_name.downcase %>/index'
+end
+
+get '/<%= @model_name.downcase %>/new' do
+  erb :'<%= @model_name.downcase %>/new'
+end
+
+post '/<%= @model_name.downcase %>/create' do
+  @<%= @model_name.downcase %> = <%= @model_name %>.new(params)
+  if @<%= @model_name.downcase %>.save
+    redirect '/<%= @model_name.downcase %>'
+  else
+    erb :'<%= @model_name.downcase %>/new'
+  end
+end
+
+get '/<%= @model_name.downcase %>/edit/:id' do
+  @<%= @model_name.downcase %> = <%= @model_name %>.get(params[:id])
+  erb :'<%= @model_name.downcase %>/edit'
+end
+
+post '/<%= @model_name.downcase %>/update/:id' do
+  @<%= @model_name.downcase %> = <%= @model_name %>.get(params[:id])
+
+  if @<%= @model_name.downcase %>.update(params)
+    redirect '/<%= @model_name.downcase %>'
+  else
+    erb :'<%= @model_name.downcase %>/edit'
+  end
+end
+
+get '/<%= @model_name.downcase %>/delete/:id' do
+  @<%= @model_name.downcase %> = <%= @model_name %>.get(params[:id])
+  @<%= @model_name.downcase %>.destroy
+  redirect '/<%= @model_name.downcase %>'
+end

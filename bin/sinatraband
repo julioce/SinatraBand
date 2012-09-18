@@ -50,14 +50,14 @@ class App
     #Creates de Database file
     generate_file_from_template :directory => "", :template => "database", :final_file => "database", :extension => "rb"
 
-    #Creates de View diretory
-    mkdir :directory => "./#{@name}/views"
-
     #Creates de Models diretory
     mkdir :directory => "./#{@name}/models"
 
-    #Creates de Models diretory
+    #Creates de Controllers diretory
     mkdir :directory => "./#{@name}/controllers"
+
+    #Creates de View diretory
+    mkdir :directory => "./#{@name}/views"
 
     #Creates de index file
     generate_file_from_template :directory => "/views", :template => "index", :final_file => "index", :extension => "erb"
@@ -73,6 +73,12 @@ class App
 
     #Creates de Model file
     generate_file_from_template :directory => "/models", :template => "model", :final_file => input[:model_name].downcase, :extension => "rb"
+
+    #Creates de Controller file
+    generate_file_from_template :directory => "/controllers", :template => "controller", :final_file => input[:model_name].downcase, :extension => "rb"
+
+    #Creates de View diretory
+    mkdir :directory => ".#{@name}/views/"+input[:model_name].downcase
   end
 
 end

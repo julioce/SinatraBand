@@ -9,7 +9,8 @@ Dir["./models/*.rb"].each {|file| require_relative file }
 # Perform basic sanity checks and initialize all relationships
 DataMapper.finalize
 
-get '/' do
-  @page = 'index'
-  erb :index
-end
+# Enables session
+enable :sessions
+
+# Loads all controllers in controllers directory
+Dir["./controllers/*.rb"].each {|file| require_relative file }

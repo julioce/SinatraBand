@@ -9,7 +9,7 @@ Also, i think Sinatra sings better with a band...
 Installation
 -----------
 
-    $ gem install sinatraband-0.1.2.gem
+    $ gem install sinatraband-0.1.3.gem
 
 
 Requirements
@@ -41,6 +41,8 @@ Then run the Sinatra app like you would normally do:
 You can also create a model and it's following properties:
 
     $ sinatraband model model_name property1:datamapper_type property2:other_datamapper_type
+
+This also creates a sub-directory on the views directory with the name of the model and a controller file containing a basic scaffold idea. Remember that the views files called in the controller are not generated. 
 
 
 Testing
