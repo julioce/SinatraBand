@@ -9,7 +9,7 @@ Also, i think Sinatra sings better with a band...
 Installation
 -----------
 
-    $ gem install sinatraband-0.1.3.gem
+    $ gem install sinatraband-0.1.5.gem
 
 
 Requirements
@@ -45,7 +45,7 @@ You can also create a model and it's following properties:
 This also creates a sub-directory on the views directory with the name of the model and a controller file containing a basic scaffold idea. Remember that the views files called in the controller are not generated. 
 
 
-Testing
+Generating Tests
 -------
 
 You are on your own...
