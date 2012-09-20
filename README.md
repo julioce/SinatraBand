@@ -9,7 +9,7 @@ Also, i think Sinatra sings better with a band...
 Installation
 -----------
 
-    $ gem install sinatraband-0.1.5.gem
+    $ gem install sinatraband-0.1.6.gem
 
 
 Requirements
@@ -42,7 +42,10 @@ You can also create a model and it's following properties:
 
     $ sinatraband model model_name property1:datamapper_type property2:other_datamapper_type
 
-This also creates a sub-directory on the views directory with the name of the model and a controller file containing a basic scaffold idea. Remember that the views files called in the controller are not generated. 
+This also creates a sub-directory on the views directory with the name of the model and a controller file containing a basic scaffold idea. Remember that the views files called in the controller are not generated.
+
+If you decide to create a model with the same name as another, the older model will be deleted and a new one following your new properties will be created.
+That means you can lose some latter added code. So be careful when generating models.
 
 
 Generating Tests

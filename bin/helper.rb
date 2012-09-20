@@ -1,19 +1,25 @@
 def generate_file_from_template input={:directory => './'+@name, :template => '', :final_file => '', :extension => ''}
-  
-  File.open("./#{@name}#{input[:directory]}/#{input[:final_file]}.#{input[:extension]}", "w") do |f|
-  	begin
-  	  file_template = ERB.new(File.open("#{@root}#{input[:directory]}/#{input[:template]}.erb").read)
-  	rescue (Errno::ENOENT)
-  	  put_error_and_quit "Error: Missing template for file #{@root}#{input[:directory]}/#{input[:template]}.#{input[:extension]}."
-  	end
 
-  	begin
-  	  f.write(file_template.result(binding))
-  	  puts ".#{input[:directory]}/#{input[:final_file]}.#{input[:extension]} file created."
-  	rescue (Errno::ENOENT)
-  	  put_error_and_quit "Error creating #{input[:final_file]}.#{input[:extension]}."
-  	end
+  file_name = "./#{@name}#{input[:directory]}/#{input[:final_file]}.#{input[:extension]}"
 
+  if File.exists?(file_name) && File.file?(file_name)
+  	File.delete(file_name)
+  	puts "Notice: You already have a file #{file_name}. Older version deleted."
+  end
+
+  File.open(file_name, 'w') do |f|
+	begin
+     file_template = ERB.new(File.open("#{@root}#{input[:directory]}/#{input[:template]}.erb").read)
+	rescue (Errno::ENOENT)
+	  put_error_and_quit "Error: Missing template for file #{@root}#{input[:directory]}/#{input[:template]}.#{input[:extension]}."
+	end
+
+	begin
+	  f.write(file_template.result(binding))
+	  puts ".#{input[:directory]}/#{input[:final_file]}.#{input[:extension]} file created."  
+	rescue (Errno::ENOENT)
+      put_error_and_quit "Error creating #{input[:final_file]}.#{input[:extension]}."
+	end
   end
 end
 
