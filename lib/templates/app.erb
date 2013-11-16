@@ -1,16 +1,18 @@
 require 'sinatra'
 
 # Loads database configuration
-require_relative './database.rb'
+require_relative './db/connection.rb'
 
 # Loads all models in models directory
 Dir["./models/*.rb"].each {|file| require_relative file }
-
-# Perform basic sanity checks and initialize all relationships
-DataMapper.finalize
 
 # Enables session
 enable :sessions
 
 # Loads all controllers in controllers directory
 Dir["./controllers/*.rb"].each {|file| require_relative file }
+
+# Default root_route
+get '/' do
+  erb :'index'
+end

@@ -1,30 +1,21 @@
-class <%= @model_name %>
-  include DataMapper::Resource
-
-  property :id, Serial
-  <% @model_properties.each do |property|%>
-  <%= property %>
-  <% end%>
-  property :created_at, DateTime
-
-  property :updated_at, DateTime
-
-  #validates_absence_of
+class <%= @model_name %> < ActiveRecord::Base
   #validates_acceptance_of
-  #validates_with_block
+  #validates_associated
   #validates_confirmation_of
+  #validates_exclusion_of
   #validates_format_of
+  #validates_inclusion_of
   #validates_length_of
-  #validates_with_method
   #validates_numericality_of
-  #validates_primitive_type_of
   #validates_presence_of
   #validates_uniqueness_of
-  #validates_within
+  #validates_each
 
-  #validates_with_method
+  #validate :custom_method
+
+  #def custom_method
+  #  errors.add(:field, "that's an error") if
+  #    some_condition != true
+  #end
 
 end
-
-# Automatically create the <%= @model_name %> table if you haven't already
-<%= @model_name %>.auto_upgrade!

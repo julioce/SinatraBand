@@ -28,11 +28,15 @@ class AppTest < Test::Unit::TestCase
 		assert_equal true, Dir.exist?("test/models")
 		assert_equal true, Dir.exist?("test/controllers")
 		assert_equal true, Dir.exist?("test/views")
+		assert_equal true, Dir.exist?("test/db")
+		assert_equal true, Dir.exist?("test/db/migrate")
 	end
 
 	def test_create_app_files
 		assert_equal true, File.exist?("test/app.rb")
-		assert_equal true, File.exist?("test/database.rb")
+		assert_equal true, File.exist?("test/Gemfile")
+		assert_equal true, File.exist?("test/rakefile.rb")
+		assert_equal true, File.exist?("test/db/connection.rb")
 		assert_equal true, File.exist?("test/views/index.erb")
 	end
 

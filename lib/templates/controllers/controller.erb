@@ -1,38 +1,38 @@
-get '/<%= @model_name.downcase %>' do
-  @<%= @model_name.downcase %> = <%= @model_name %>.all
-  erb :'<%= @model_name.downcase %>/index'
+get '/<%= @model_name.downcase.pluralize %>' do
+  @<%= @model_name.downcase.pluralize %> = <%= @model_name %>.all
+  erb :'<%= @model_name.downcase.pluralize %>/index'
 end
 
-get '/<%= @model_name.downcase %>/new' do
-  erb :'<%= @model_name.downcase %>/new'
+get '/<%= @model_name.downcase.pluralize %>/new' do
+  erb :'<%= @model_name.downcase.pluralize %>/new'
 end
 
-post '/<%= @model_name.downcase %>/create' do
+post '/<%= @model_name.downcase.pluralize %>/create' do
   @<%= @model_name.downcase %> = <%= @model_name %>.new(params)
   if @<%= @model_name.downcase %>.save
-    redirect '/<%= @model_name.downcase %>'
+    redirect '/<%= @model_name.downcase.pluralize %>'
   else
-    erb :'<%= @model_name.downcase %>/new'
+    erb :'<%= @model_name.downcase.pluralize %>/new'
   end
 end
 
-get '/<%= @model_name.downcase %>/edit/:id' do
-  @<%= @model_name.downcase %> = <%= @model_name %>.get(params[:id])
-  erb :'<%= @model_name.downcase %>/edit'
+get '/<%= @model_name.downcase.pluralize %>/edit/:id' do
+  @<%= @model_name.downcase %> = <%= @model_name %>.where(params[:id]).first
+  erb :'<%= @model_name.downcase.pluralize %>/edit'
 end
 
-post '/<%= @model_name.downcase %>/update/:id' do
-  @<%= @model_name.downcase %> = <%= @model_name %>.get(params[:id])
+post '/<%= @model_name.downcase.pluralize %>/update/:id' do
+  @<%= @model_name.downcase %> = <%= @model_name %>.where(params[:id]).first
 
   if @<%= @model_name.downcase %>.update(params)
     redirect '/<%= @model_name.downcase %>'
   else
-    erb :'<%= @model_name.downcase %>/edit'
+    erb :'<%= @model_name.downcase.pluralize %>/edit'
   end
 end
 
-get '/<%= @model_name.downcase %>/delete/:id' do
-  @<%= @model_name.downcase %> = <%= @model_name %>.get(params[:id])
+get '/<%= @model_name.downcase.pluralize %>/delete/:id' do
+  @<%= @model_name.downcase %> = <%= @model_name %>.where(params[:id]).first
   @<%= @model_name.downcase %>.destroy
-  redirect '/<%= @model_name.downcase %>'
+  redirect '/<%= @model_name.downcase.pluralize %>'
 end

@@ -1,18 +1,23 @@
 Gem::Specification.new do |s|
   s.name        = 'sinatraband'
-  s.version     = '0.1.6'
+  s.version     = '0.2'
   s.executables << 'sinatraband'
-  s.date        = '2012-09-20'
-  s.summary     = "Sinatra app generator"
-  s.description = "Ruby gem to create a basic scaffold sinatra app."
+  s.date        = '2013-11-15'
+  s.summary     = "Sinatra simple app generator"
+  s.description = "Ruby gem to create a basic scaffold sinatra app with activerecord."
   s.authors     = ["Julio Bueno"]
   s.email       = 'julioce@gmail.com'
-  s.files       = ["lib/templates/controllers/controller.erb",
-				   "lib/templates/models/model.erb",
-  				   "lib/templates/views/index.erb",
-                   "lib/templates/app.erb", 
-                   "lib/templates/database.erb", 
-                   "bin/app.rb", 
-                   "bin/helper.rb"]
+  s.license    = 'OSL-3.0'
   s.homepage    = 'https://github.com/julioce/SinatraBand'
+  s.files       = [ "lib/templates/controllers/controller.erb",
+				            "lib/templates/models/model.erb",
+  				          "lib/templates/views/index.erb",
+                    "lib/templates/app.erb", 
+                    "lib/templates/Gemfile.erb", 
+                    "lib/templates/rakefile.erb", 
+                    "lib/templates/db/migrate/migration.erb", 
+                    "lib/templates/db/connection.erb", 
+                    "bin/app.rb", 
+                    "bin/helper.rb"]
+  s.add_runtime_dependency 'activesupport'
 end

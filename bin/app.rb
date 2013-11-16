@@ -1,5 +1,6 @@
 require 'pathname'
 require 'erb'
+require 'active_support/inflector'
 require_relative './helper.rb'
 
 class App
@@ -7,25 +8,25 @@ class App
 
   def proccess_arguments
   	if ARGV.empty?
-  		put_error_and_quit :error_message => "Error: Missing arguments"
+  		put_error_and_quit error_message: "Error: Missing arguments"
   	end
 
     #Get the global current path
-    @root = Pathname(__FILE__).dirname.realpath.to_s+"/../lib/templates"
+    @root =  "#{Pathname(__FILE__).dirname.realpath.to_s}/../lib/templates"
 
     #Defines operation
     case ARGV[0].downcase
       when "create"
-        #Get de App name
+        #Get the App name
         if ARGV[1].nil?
-          put_error_and_quit :error_message => "Error: Missing arguments for create action"
+          put_error_and_quit error_message: "Error: Missing arguments for create action"
         else
           @name = ARGV[1]
           create_app
         end
       when "model"
         if ARGV[1].nil?
-          put_error_and_quit :error_message => "Error: Missing arguments for model action"
+          put_error_and_quit error_message: "Error: Missing arguments for model action"
         else
           if ARGV.length > 2
             model_properties = Array.new
@@ -35,52 +36,65 @@ class App
               end
             end
           end
-          create_model :model_name => ARGV[1], :model_properties => model_properties
+          create_model model_name: ARGV[1], model_properties: model_properties
         end
       else
-        put_error_and_quit :error_message => "Error: Unknow arguments"
+        put_error_and_quit error_message: "Error: Unknow arguments"
     end
   end
 
   def create_app
-    #Creates de App diretory
-    mkdir :directory => "./#{@name}"
+    #Creates the App diretory
+    mkdir directory: "./#{@name}"
 
-    #Creates de App file
-    generate_file_from_template :directory => "", :template => "app", :final_file => "app", :extension => "rb"
+    #Creates the Models diretory
+    mkdir directory: "./#{@name}/models"
 
-    #Creates de Database file
-    generate_file_from_template :directory => "", :template => "database", :final_file => "database", :extension => "rb"
+    #Creates the Controllers diretory
+    mkdir directory: "./#{@name}/controllers"
 
-    #Creates de Models diretory
-    mkdir :directory => "./#{@name}/models"
+    #Creates the View diretory
+    mkdir directory: "./#{@name}/views"
 
-    #Creates de Controllers diretory
-    mkdir :directory => "./#{@name}/controllers"
+    #Creates the Database diretory
+    mkdir directory: "./#{@name}/db"
+    mkdir directory: "./#{@name}/db/migrate"
 
-    #Creates de View diretory
-    mkdir :directory => "./#{@name}/views"
+    #Creates the Gemfile
+    generate_file_from_template directory: "", template: "Gemfile", final_file: "Gemfile", extension: ""
 
-    #Creates de index file
-    generate_file_from_template :directory => "/views", :template => "index", :final_file => "index", :extension => "erb"
+    #Creates the Rakefile file
+    generate_file_from_template directory: "", template: "rakefile", final_file: "rakefile", extension: ".rb"
+
+    #Creates the App file
+    generate_file_from_template directory: "", template: "app", final_file: "app", extension: ".rb"
+
+    #Creates the Database file
+    generate_file_from_template directory: "/db", template: "connection", final_file: "connection", extension: ".rb"
+
+    #Creates the index file
+    generate_file_from_template directory: "/views", template: "index", final_file: "index", extension: ".erb"
   end
 
-  def create_model input={:model_name => '', :model_properties => {}}
+  def create_model input={model_name: '', model_properties: {}}
     if input[:model_properties].nil?
-      put_error_and_quit :error_message => "Error: Missing arguments for model action"
+      put_error_and_quit error_message: "Error: Missing arguments for model action"
     end
     
     @model_name = input[:model_name].capitalize
-    @model_properties = elaborates_model_properties :model_properties => input[:model_properties]
+    @model_properties = elaborates_model_properties model_properties: input[:model_properties]
 
-    #Creates de Model file
-    generate_file_from_template :directory => "/models", :template => "model", :final_file => input[:model_name].downcase, :extension => "rb"
+    #Creates the Model file
+    generate_file_from_template directory: "/models", template: "model", final_file: input[:model_name].downcase, extension: ".rb"
 
-    #Creates de Controller file
-    generate_file_from_template :directory => "/controllers", :template => "controller", :final_file => input[:model_name].downcase, :extension => "rb"
+    #Creates the Controller file
+    generate_file_from_template directory: "/controllers", template: "controller", final_file: input[:model_name].downcase.pluralize, extension: ".rb"
 
-    #Creates de View diretory
-    mkdir :directory => ".#{@name}/views/"+input[:model_name].downcase
+    #Creates the migration file
+    generate_file_from_template directory: "/db/migrate", template: "migration", final_file: "#{Time.now.utc.strftime("%Y%m%d%H%M%S")}_create_#{input[:model_name].downcase}", extension: ".rb"
+
+    #Creates the View diretory
+    mkdir directory: ".#{@name}/views/#{input[:model_name].downcase.pluralize}"
   end
 
 end

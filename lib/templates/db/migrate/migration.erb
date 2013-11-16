@@ -1,0 +1,14 @@
+class Create<%=@model_name%> < ActiveRecord::Migration
+  def up
+    create_table :<%=@model_name.downcase.pluralize%> do |t|
+      <% @model_properties.each do |property|%>
+      <%= property %>
+      <% end %>
+      t.timestamps
+    end
+  end
+
+  def down
+    drop_table :<%=@model_name.downcase.pluralize%>
+  end
+end
