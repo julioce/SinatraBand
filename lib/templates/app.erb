@@ -3,11 +3,12 @@ require 'sinatra'
 # Loads database configuration
 require_relative './db/connection.rb'
 
-# Loads all models in models directory
-Dir["./models/*.rb"].each {|file| require_relative file }
-
 # Enables session
 enable :sessions
+set :session_secret, 'your secret key'
+
+# Loads all models in models directory
+Dir["./models/*.rb"].each {|file| require_relative file }
 
 # Loads all controllers in controllers directory
 Dir["./controllers/*.rb"].each {|file| require_relative file }
