@@ -47,6 +47,9 @@ class App
     #Creates the App diretory
     mkdir directory: "./#{@name}"
 
+    #Creates the Config diretory
+    mkdir directory: "./#{@name}/config"
+
     #Creates the Models diretory
     mkdir directory: "./#{@name}/models"
 
@@ -69,11 +72,17 @@ class App
     #Creates the App file
     generate_file_from_template directory: "", template: "app", final_file: "app", extension: ".rb"
 
-    #Creates the Database file
-    generate_file_from_template directory: "/db", template: "connection", final_file: "connection", extension: ".rb"
+    #Creates the Config file
+    generate_file_from_template directory: "/config", template: "config", final_file: "config", extension: ".rb"
+
+    #Creates the layout file
+    generate_file_from_template directory: "/views", template: "layout", final_file: "layout", extension: ".erb"
 
     #Creates the index file
     generate_file_from_template directory: "/views", template: "index", final_file: "index", extension: ".erb"
+
+    #Creates the error file
+    generate_file_from_template directory: "/views", template: "error", final_file: "error", extension: ".erb"
   end
 
   def create_model input={model_name: '', model_properties: {}}
@@ -94,7 +103,7 @@ class App
     generate_file_from_template directory: "/db/migrate", template: "migration", final_file: "#{Time.now.utc.strftime("%Y%m%d%H%M%S")}_create_#{input[:model_name].downcase}", extension: ".rb"
 
     #Creates the View diretory
-    mkdir directory: ".#{@name}/views/#{input[:model_name].downcase.pluralize}"
+    mkdir directory: "./#{@name}/views/#{input[:model_name].downcase.pluralize}"
   end
 
 end

@@ -1,0 +1,36 @@
+# Adds gzip compression to requests
+use Rack::Deflater
+
+# Register Flash Sinatra messages
+# register Sinatra::Flash
+
+# Configs timezone
+ActiveRecord::Base.default_timezone = :local
+
+# Enables session
+enable :sessions
+set :session_secret, 'your secret key'
+# use Rack::Session::Pool, :secret => 'your secret key'
+
+# Loads database configuration
+set :database, "mysql2://root:@localhost/<%= @name %>"
+
+# configure :production do
+#   db = URI.parse(ENV['DATABASE_URL'] || 'postgres:///localhost/<%= @name %>')
+
+#  ActiveRecord::Base.establish_connection(
+#    :adapter  => db.scheme == 'postgres' ? 'postgresql' : db.scheme,
+#    :host     => db.host,
+#    :username => db.user,
+#    :password => db.password,
+#    :database => db.path[1..-1],
+#    :encoding => 'utf8'
+#  )
+# end
+
+# html escape method
+# helpers do
+#   def h(text)
+#     Rack::Utils.escape_html(text)
+#   end
+# end

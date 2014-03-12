@@ -25,6 +25,7 @@ class AppTest < Test::Unit::TestCase
 		ARGV[1] = "test"
 		app.proccess_arguments
 		assert_equal true, Dir.exist?(ARGV[1])
+		assert_equal true, Dir.exist?("test/config")
 		assert_equal true, Dir.exist?("test/models")
 		assert_equal true, Dir.exist?("test/controllers")
 		assert_equal true, Dir.exist?("test/views")
@@ -36,8 +37,25 @@ class AppTest < Test::Unit::TestCase
 		assert_equal true, File.exist?("test/app.rb")
 		assert_equal true, File.exist?("test/Gemfile")
 		assert_equal true, File.exist?("test/rakefile.rb")
-		assert_equal true, File.exist?("test/db/connection.rb")
+		assert_equal true, File.exist?("test/config/config.rb")
+		assert_equal true, File.exist?("test/views/layout.erb")
 		assert_equal true, File.exist?("test/views/index.erb")
+		assert_equal true, File.exist?("test/views/error.erb")
+	end
+
+	def test_create_model
+		puts `rm -rf ./test`
+		app = App.new
+		ARGV[0] = "create"
+		ARGV[1] = "test"
+		app.proccess_arguments
+		ARGV[0] = "model"
+		ARGV[1] = "tester"
+		ARGV[2] = "name:string"
+		app.proccess_arguments
+		assert_equal true, File.exist?("test/models/tester.rb")
+		assert_equal true, File.exist?("test/controllers/testers.rb")
+		assert_equal true, Dir.exist?("test/views/testers")
 	end
 
 end
