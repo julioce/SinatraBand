@@ -1,11 +1,10 @@
 require 'sinatra'
+require 'sinatra/activerecord'
+# require 'active_support/core_ext'
+# require 'sinatra/flash'
 
-# Loads database configuration
-require_relative './db/connection.rb'
-
-# Enables session
-enable :sessions
-set :session_secret, 'your secret key'
+# Loads app config
+require_relative './config/config.rb'
 
 # Loads all models in models directory
 Dir["./models/*.rb"].each {|file| require_relative file }
@@ -16,4 +15,14 @@ Dir["./controllers/*.rb"].each {|file| require_relative file }
 # Default root_route
 get '/' do
   erb :'index'
+end
+
+# Default Not found page
+not_found do
+  erb :'error'
+end
+
+# Default Error page
+error do
+  erb :'error'
 end
