@@ -2,15 +2,10 @@ require 'sinatra'
 require 'sinatra/activerecord'
 # require 'active_support/core_ext'
 # require 'sinatra/flash'
+# require 'i18n'
 
-# Loads app config
-require_relative './config/config.rb'
-
-# Loads all models in models directory
-Dir["./models/*.rb"].each {|file| require_relative file }
-
-# Loads all controllers in controllers directory
-Dir["./controllers/*.rb"].each {|file| require_relative file }
+# Loads application configuration
+require './config/config.rb'
 
 # Default root_route
 get '/' do
